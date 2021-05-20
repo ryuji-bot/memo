@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="jas">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <header>
+        <h1>memo</h1>
+    </header>
+    <main>
+        <input type="text" id="input">
+        <textarea id="text_area"></textarea>
+        <ul>
+            <li id="save">save</li>
+            <li id="clear">clear</li>
+        </ul>
+    </main>
+    <footer>
+        <small>G's</small>
+    </footer>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script>
+        //1.Save クリックイベント
+        $('#save').on('click', function () {
+            let title = $('#input').val();
+            let text = $('#text_area').val();
+            let obj = {
+                "title": title,
+                "text": text
+            };
+            let json = JSON.stringify(obj);
+            localStorage.setItem('memo02', json);
+        });
+
+
+
+
+        //2.clear クリックイベント
+
+        $('#clear').on('click', function () {
+            localStorage.removeItem('memo02');
+            $('#input').val('');
+            $('#text_area').val('');
+        });
+
+
+        //3.ページ読み込み：保存データ取得表示
+
+        if (localStorage.getItem('memo02')) {
+            const json_get = localStorage.getItem('memo02');
+            const obj_get = JSON.parse(json_get);
+            $('#input').val(obj_get.title);
+            $('#text_area').val(obj_get.text);
+        }
+
+    </script>
+</body>
+
+</html>
